@@ -1,0 +1,271 @@
+<LoginPage>:
+    name: 'login'
+    MDFloatLayout:
+    Image:
+        source: 'Okudo.png'
+        pos_hint: {'y': 0.25}
+        size_hint:
+    MDLabel:
+        text: "Stage Two Quiz"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.45}
+        halign: 'center'
+        font_size: '20sp'
+        theme_text_color: 'Secondary'
+        text_color: 60/255, 43/255, 117/255, 1
+
+    MDFloatLayout:
+        size_hint: 0.85, 0.08
+        pos_hint: {'center_x': 0.5, 'center_y': 0.38}
+        canvas:
+            Color:
+                rgb: (238/255, 238/255, 238/255, 1)
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius:[25]
+        TextInput:
+            hint_text: 'Enter Username'
+            size_hint: 1, None
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            height: self.minimum_height
+            multiline: False
+            cursor_color: 96/255, 74/255, 215/255, 1
+            cursor_width: '2sp'
+            foreground_color: 96/255, 74/255, 215/255, 1
+            background_color: 0, 0, 0, 0
+            padding: 15
+            font_name:
+            font_size: '18sp'
+
+    MDFloatLayout:
+        size_hint: 0.85, 0.08
+        pos_hint: {'center_x': 0.5, 'center_y': 0.28}
+        canvas:
+            Color:
+                rgb: (238/255, 238/255, 238/255, 1)
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius:[25]
+        TextInput:
+            id: passw
+            password: True
+            hint_text: 'Password'
+            password_hint: True
+            size_hint: 1, None
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            height: self.minimum_height
+            multiline: False
+            cursor_color: 96/255, 74/255, 215/255, 1
+            cursor_width: '2sp'
+            foreground_color: 96/255, 74/255, 215/255, 1
+            background_color: 0, 0, 0, 0
+            padding: 15
+            font_name:
+            font_size: '18sp'
+
+    MDTextButton:
+        text: 'Forget your password?'
+        font_name:
+        theme_text_color: 'Primary'
+        text_color: 246/255, 135/255, 177/255, 1
+        pos_hint: {'center_x': 0.5, 'center_y': 0.21}
+        on_press: root.show_call_instructor_popup()
+
+    Button:
+        text: 'LOGIN'
+        font_size: '20sp'
+        size_hint: 0.5, 0.08
+        pos_hint: {'center_x': 0.5, 'center_y': 0.12}
+        background_color: 0, 0, 0, 0
+        on_press:
+            root.manager.current = 'home' if passw.text == 'somto' else 'login'
+            root.manager.transition.direction  = 'left'
+
+        canvas.before:
+            Color:
+                rgb: 7/255, 32/255, 240/255, 1
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+    MDLabel:
+        text: "Powered by Sure Way"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.05}
+        halign: 'center'
+        font_size: '10sp'
+        theme_text_color: 'Secondary'
+        text_color: 60/255, 43/255, 117/255, 1
+    MDLabel:
+        text: "EduTech 2023"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.03}
+        halign: 'center'
+        font_size: '10sp'
+        theme_text_color: 'Secondary'
+        text_color: 60/255, 43/255, 117/255, 1
+
+<HomePage>:
+    name: 'home'
+
+    MDLabel:
+        text: "Welcome"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+        halign: 'center'
+        font_size: '40sp'
+        theme_text_color: 'Secondary'
+        text_color: 60/255, 43/255, 117/255, 1
+    MDLabel:
+        text: ""
+        pos_hint: {'center_x': 0.5, 'center_y': 0.03}
+        halign: 'center'
+        font_size: '15sp'
+        theme_text_color: 'Secondary'
+        text_color: 60/255, 43/255, 117/255, 1
+    MDLabel:
+        id: result_label
+        font_size: "30sp"
+        halign: "center"
+        pos_hint: {"center_y": 0.7}
+    MDRoundFlatButton:
+        text: "Start Maths Quiz"
+        pos_hint: {"center_x": 0.5, "center_y": 0.6}
+        text_color: 'white'
+        on_release: root.start_quiz()
+    MDRoundFlatButton:
+        text: "Start English Quiz"  # Add this button for Quiz2
+        pos_hint: {"center_x": 0.5, "center_y": 0.4}
+        text_color: "white"
+        on_release: root.start_quiz2()  # Link it to the start_quiz2 method
+    MDRaisedButton:
+        text: "Logout"
+        pos_hint: {"center_x": 0.5, "center_y": 0.1}
+        on_release: root.logout()
+
+<QuizScreen>:
+    name: 'quiz'
+    canvas.before:
+        Color:
+            rgba: (132/225, 183/225, 238/225, 1)  # Set the background color to white (1, 1, 1 represents white)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: dp(10)
+        padding: dp(10)
+
+        Label:
+            id: question_label
+            font_size: '20sp'
+            halign: 'center'
+            color: 0, 0, 0, 1
+        GridLayout:
+            cols: 1
+            spacing: dp(10)
+            padding: dp(10)
+
+            Button:
+                id: option_1
+                text: ''
+                on_press: root.check_answer(0)
+            Button:
+                id: option_2
+                text: ''
+                on_press: root.check_answer(1)
+            Button:
+                id: option_3
+                text: ''
+                on_press: root.check_answer(2)
+            Button:
+                id: option_4
+                text: ''
+                on_press: root.check_answer(3)
+
+        AnchorLayout:
+            anchor_x: 'center'
+            BoxLayout:
+                spacing: dp(10)
+                padding: dp(30)
+                Button:
+                    text: 'Next'
+                    on_press: root.next_question()
+
+<ResultScreen>:
+    name: 'result_screen'
+    MDLabel:
+        id: result_label
+        font_size: "30sp"
+        halign: "center"
+        pos_hint: {"center_y": 0.7}
+    MDRaisedButton:
+        text: "Try Again"
+        pos_hint: {"center_x": 0.5, "center_y": 0.2}
+        on_release: app.reset_quiz_and_go_home()
+
+
+<QuizScreen2>:
+    name: 'quiz2'
+    canvas.before:
+        Color:
+            rgba: (132/225, 183/225, 238/225, 1)  # Set the background color to white (1, 1, 1 represents white)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: dp(10)
+        padding: dp(10)
+
+        Label:
+            id: question_label
+            font_size: '20sp'
+            halign: 'center'
+            color: 0, 0, 0, 1
+
+        GridLayout:
+            cols: 1
+            spacing: dp(10)
+            padding: dp(10)
+
+            Button:
+                id: option_1
+                text: ''
+                on_press: root.check_answer(0)
+            Button:
+                id: option_2
+                text: ''
+                on_press: root.check_answer(1)
+            Button:
+                id: option_3
+                text: ''
+                on_press: root.check_answer(2)
+            Button:
+                id: option_4
+                text: ''
+                on_press: root.check_answer(3)
+
+        AnchorLayout:
+            anchor_x: 'center'
+            BoxLayout:
+                spacing: dp(10)
+                padding: dp(30)
+                Button:
+                    text: 'Next'
+                    on_press: root.next_question()
+
+<ResultScreen2>:
+    name: 'result_screen2'
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: dp(10)
+        padding: dp(10)
+        MDLabel:
+            id: result_label
+            font_size: "30sp"
+            halign: "center"
+        MDRaisedButton:
+            text: "Try Again"
+            on_press: root.try_again()
+
+
